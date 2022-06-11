@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "blossom-back",
+  "version": "${version}",
+  "name": "BlossomBack",
+  "description": "Blossom-series /back command and utilities",
+  "authors": [
+    "CodedSakura"
+  ],
+  "contact": {
+    "website": "https://blossom.codedsakura.dev",
+    "repo": "https://github.com/BlossomMods/BlossomBack"
+  },
+  "license": "MIT",
+  "icon": "assets/blossom-back/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "dev.codedsakura.blossom.back.BlossomBack"
+    ]
+  },
+  "mixins": [],
+  "depends": {
+    "fabricloader": ">=0.14.3",
+    "minecraft": "1.18.2",
+    "blossom-lib": "${blossomlib_version}"
+  },
+  "suggests": {
+    "fabric-permissions-api-v0": "*"
+  }
+}
