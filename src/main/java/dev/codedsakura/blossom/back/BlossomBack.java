@@ -24,6 +24,10 @@ public class BlossomBack implements ModInitializer {
 
     private int runBack(CommandContext<ServerCommandSource> ctx) throws CommandSyntaxException {
         ServerPlayerEntity player = ctx.getSource().getPlayer();
+        if (player == null) {
+            throw ServerCommandSource.REQUIRES_PLAYER_EXCEPTION.create();
+        }
+
         var destination = TeleportUtils.getLastTeleport(player.getUuid());
 
         LOGGER.trace("back {} to {}", player, destination);
