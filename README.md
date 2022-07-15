@@ -17,7 +17,13 @@ BlossomBack is a Minecraft Fabric mod in the Blossom-series mods that provides /
 
 ## Config
 
-`teleportation`: [TeleportationConfig](https://github.com/BlossomMods/BlossomLib/blob/main/README.md#teleportationconfig) -
+`back`: [TeleportProps](#teleportprops) - properties of /back, used for /lastdeath if `lastDeath` is set to `null`  
+`lastDeath`: [TeleportProps](#teleportprops) or null - properties of /lastdeath
+
+### TeleportProps
+
+`teleportation`: [TeleportationConfig](https://github.com/BlossomMods/BlossomLib/blob/main/README.md#teleportationconfig)
+-
 teleportation settings  
 `standStill`: int - (seconds), how long the player has to stand still before being teleported  
 `cooldown`: int - (seconds), how long the player has to wait after teleporting using this command, before being able to
@@ -27,6 +33,8 @@ teleport again
 
 - `/back` - teleport player to position before previous teleport  
   Permission: `blossom.back` (default: true)
+- `/lastdeath` - teleport player to position where they died  
+  Permission: `blossom.last-death` (default: true)
 
 ## Translation keys
 

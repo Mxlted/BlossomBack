@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "dev.codedsakura.blossom.back.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "PlayerDeathMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

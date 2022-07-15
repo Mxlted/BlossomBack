@@ -19,7 +19,9 @@
       "dev.codedsakura.blossom.back.BlossomBack"
     ]
   },
-  "mixins": [],
+  "mixins": [
+    "blossom-back.mixins.json"
+  ],
   "depends": {
     "fabricloader": ">=0.14.3",
     "minecraft": "1.19.x",

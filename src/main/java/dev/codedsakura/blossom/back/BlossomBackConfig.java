@@ -3,9 +3,22 @@ package dev.codedsakura.blossom.back;
 
 import dev.codedsakura.blossom.lib.teleport.TeleportConfig;
 
-public class BlossomBackConfig {
-    TeleportConfig teleportation = null;
+import javax.annotation.Nullable;
 
-    int standStill = 5;
-    int cooldown = 120;
+public class BlossomBackConfig {
+    static class TeleportProps {
+        TeleportConfig teleportation = null;
+
+        int standStill;
+        int cooldown;
+
+        public TeleportProps(int standStill, int cooldown) {
+            this.standStill = standStill;
+            this.cooldown = cooldown;
+        }
+    }
+
+    TeleportProps back = new TeleportProps(5, 120);
+    @Nullable
+    TeleportProps lastDeath = null;
 }
