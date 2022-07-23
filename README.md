@@ -17,6 +17,9 @@ BlossomBack is a Minecraft Fabric mod in the Blossom-series mods that provides /
 
 ## Config
 
+This mod's config file can be found at `config/BlossomMods/BlossomBack.json`, after running the server with
+the mod at least once.
+
 `back`: [TeleportProps](#teleportprops) - properties of /back, used for /lastdeath if `lastDeath` is set to `null`  
 `lastDeath`: [TeleportProps](#teleportprops) or null - properties of /lastdeath
 
