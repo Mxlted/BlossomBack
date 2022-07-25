@@ -1,3 +1,10 @@
+# 2.0.2
+
+* Fix CI
+* Update .editorconfig
+* Fix fabric.mod.json blossom-lib dependency
+* Bump BlossomLib version
+
 # 2.0.1
 
 * Add Modrinth to CI
