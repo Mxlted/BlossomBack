@@ -39,10 +39,7 @@ public class BlossomBack implements ModInitializer {
     }
 
     private int runBack(CommandContext<ServerCommandSource> ctx) throws CommandSyntaxException {
-        ServerPlayerEntity player = ctx.getSource().getPlayer();
-        if (player == null) {
-            throw ServerCommandSource.REQUIRES_PLAYER_EXCEPTION.create();
-        }
+        ServerPlayerEntity player = ctx.getSource().getPlayerOrThrow();
 
         var destination = TeleportUtils.getLastTeleport(player.getUuid());
 
@@ -65,10 +62,7 @@ public class BlossomBack implements ModInitializer {
     }
 
     private int runLastDeath(CommandContext<ServerCommandSource> ctx) throws CommandSyntaxException {
-        ServerPlayerEntity player = ctx.getSource().getPlayer();
-        if (player == null) {
-            throw ServerCommandSource.REQUIRES_PLAYER_EXCEPTION.create();
-        }
+        ServerPlayerEntity player = ctx.getSource().getPlayerOrThrow();
 
         var destination = deaths.get(player.getUuid());
 
