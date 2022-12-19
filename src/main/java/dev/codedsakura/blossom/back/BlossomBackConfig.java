@@ -2,8 +2,8 @@ package dev.codedsakura.blossom.back;
 
 
 import dev.codedsakura.blossom.lib.teleport.TeleportConfig;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class BlossomBackConfig {
     static class TeleportProps {
