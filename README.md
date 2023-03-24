@@ -37,7 +37,7 @@ teleport again
 - `/back` - teleport player to position before previous teleport  
   Permission: `blossom.back` (default: true)
 - `/lastdeath` - teleport player to position where they died  
-  Permission: `blossom.last-death` (default: true)
+  Permission: `blossom.last-death` (default: false)
 
 ## Translation keys
 
