@@ -37,7 +37,7 @@ processResources {
         expand(
                 "version": project.version,
                 "blossomlib_version": project.blossomlib_version,
-                "supported_versions": project.supported_mc_versions.split(";").join("\",\""),
+                "supported_versions": project.supported_versions.split(";").join("\",\""),
         )
     }
 }
