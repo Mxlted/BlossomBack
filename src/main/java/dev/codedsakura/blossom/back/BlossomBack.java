@@ -4,6 +4,7 @@ import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.codedsakura.blossom.lib.BlossomLib;
+import dev.codedsakura.blossom.lib.config.BlossomConfig;
 import dev.codedsakura.blossom.lib.config.ConfigManager;
 import dev.codedsakura.blossom.lib.permissions.Permissions;
 import dev.codedsakura.blossom.lib.teleport.TeleportUtils;
@@ -29,12 +30,23 @@ public class BlossomBack implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        if (CONFIG.lastDeath == null) {
+            LOGGER.trace("updating config from 2.0.3 to ^2.1.0");
+            // make new config act as similar as it was previously
+            CONFIG.lastDeath = new BlossomBackConfig().lastDeath;
+            CONFIG.lastDeath.enabled = true;
+            BlossomConfig.save(CONFIG, "BlossomBack.json");
+            ConfigManager.refresh(BlossomBackConfig.class);
+        }
+
         BlossomLib.addCommand(literal("back")
-                .requires(Permissions.require("blossom.back", true))
+                .requires(Permissions.require("blossom.back", true)
+                        .and(p -> CONFIG.back.enabled))
                 .executes(this::runBack));
 
         BlossomLib.addCommand(literal("lastdeath")
-                .requires(Permissions.require("blossom.last-death", false))
+                .requires(Permissions.require("blossom.last-death", true)
+                        .and(p -> CONFIG.lastDeath.enabled))
                 .executes(this::runLastDeath));
     }
 
@@ -66,16 +78,14 @@ public class BlossomBack implements ModInitializer {
 
         var destination = deaths.get(player.getUuid());
 
-        LOGGER.trace("back {} ({}) to {}", player.getEntityName(), player.getUuid(), destination);
-
-        boolean joinedConfig = CONFIG.lastDeath == null;
+        LOGGER.trace("back (death) {} ({}) to {}", player.getEntityName(), player.getUuid(), destination);
 
         if (destination != null) {
             TeleportUtils.teleport(
-                    joinedConfig ? CONFIG.back.teleportation : CONFIG.lastDeath.teleportation,
-                    joinedConfig ? CONFIG.back.standStill : CONFIG.lastDeath.standStill,
-                    joinedConfig ? CONFIG.back.cooldown : CONFIG.lastDeath.cooldown,
-                    joinedConfig ? BlossomBack.class : BlossomLastDeath.class,
+                    CONFIG.lastDeath.teleportation,
+                    CONFIG.lastDeath.standStill,
+                    CONFIG.lastDeath.cooldown,
+                    CONFIG.separateCooldowns ? BlossomLastDeath.class : BlossomBack.class,
                     player,
                     () -> destination
             );

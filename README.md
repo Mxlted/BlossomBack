@@ -25,8 +25,7 @@ the mod at least once.
 
 ### TeleportProps
 
-`teleportation`: [TeleportationConfig](https://github.com/BlossomMods/BlossomLib/blob/main/README.md#teleportationconfig)
--
+`teleportation`: [TeleportationConfig](https://github.com/BlossomMods/BlossomLib/blob/main/README.md#teleportationconfig) -
 teleportation settings  
 `standStill`: int - (seconds), how long the player has to stand still before being teleported  
 `cooldown`: int - (seconds), how long the player has to wait after teleporting using this command, before being able to

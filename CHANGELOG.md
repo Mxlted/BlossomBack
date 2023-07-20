@@ -1,3 +1,7 @@
+# 2.1.0
+
+* Improve config ([#5](https://github.com/BlossomMods/BlossomBack/issues/5))
+
 # 2.0.3
 
 * Update CI
