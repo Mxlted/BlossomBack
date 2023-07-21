@@ -1,6 +1,7 @@
 # 2.1.0
 
 * Improve config ([#5](https://github.com/BlossomMods/BlossomBack/issues/5))
+* Make back/lastdeath optionally persist across server restarts ([#3](https://github.com/BlossomMods/BlossomBack/issues/3))
 
 # 2.0.3
 

@@ -3,6 +3,9 @@ package dev.codedsakura.blossom.back;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import dev.codedsakura.blossom.back.data.PlayerDeathData;
+import dev.codedsakura.blossom.back.data.PlayerTeleportData;
+import dev.codedsakura.blossom.back.data.ServerWorldSerializer;
 import dev.codedsakura.blossom.lib.BlossomLib;
 import dev.codedsakura.blossom.lib.config.BlossomConfig;
 import dev.codedsakura.blossom.lib.config.ConfigManager;
@@ -11,6 +14,7 @@ import dev.codedsakura.blossom.lib.teleport.TeleportUtils;
 import dev.codedsakura.blossom.lib.text.TextUtils;
 import dev.codedsakura.blossom.lib.utils.CustomLogger;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.apache.logging.log4j.core.Logger;
@@ -26,7 +30,11 @@ class BlossomLastDeath {
 public class BlossomBack implements ModInitializer {
     static BlossomBackConfig CONFIG = ConfigManager.register(BlossomBackConfig.class, "BlossomBack.json", newConfig -> CONFIG = newConfig);
     public static final Logger LOGGER = CustomLogger.createLogger("BlossomBack");
-    public static HashMap<UUID, TeleportUtils.TeleportDestination> deaths = new HashMap<>();
+    public static HashMap<UUID, TeleportUtils.TeleportDestination> DEATHS = new HashMap<>();
+
+    static PlayerTeleportData teleportData;
+    static PlayerDeathData deathData;
+
 
     @Override
     public void onInitialize() {
@@ -38,6 +46,13 @@ public class BlossomBack implements ModInitializer {
             BlossomConfig.save(CONFIG, "BlossomBack.json");
             ConfigManager.refresh(BlossomBackConfig.class);
         }
+
+        teleportData = new PlayerTeleportData();
+        deathData = new PlayerDeathData();
+
+        ServerLifecycleEvents.SERVER_STARTING.register(server -> ServerWorldSerializer.server = server);
+
+        TeleportUtils.addLastTeleportAddHook((player, destination, lastTeleportMap) -> BlossomBack.onPlayerTeleportHook());
 
         BlossomLib.addCommand(literal("back")
                 .requires(Permissions.require("blossom.back", true)
@@ -53,7 +68,7 @@ public class BlossomBack implements ModInitializer {
     private int runBack(CommandContext<ServerCommandSource> ctx) throws CommandSyntaxException {
         ServerPlayerEntity player = ctx.getSource().getPlayerOrThrow();
 
-        var destination = TeleportUtils.getLastTeleport(player.getUuid());
+        var destination = teleportData.get(player.getUuid());
 
         LOGGER.trace("back {} ({}) to {}", player.getEntityName(), player.getUuid(), destination);
 
@@ -76,7 +91,7 @@ public class BlossomBack implements ModInitializer {
     private int runLastDeath(CommandContext<ServerCommandSource> ctx) throws CommandSyntaxException {
         ServerPlayerEntity player = ctx.getSource().getPlayerOrThrow();
 
-        var destination = deaths.get(player.getUuid());
+        var destination = deathData.get(player.getUuid());
 
         LOGGER.trace("back (death) {} ({}) to {}", player.getEntityName(), player.getUuid(), destination);
 
@@ -94,5 +109,23 @@ public class BlossomBack implements ModInitializer {
         }
 
         return Command.SINGLE_SUCCESS;
+    }
+
+    public static void onPlayerDeathHook() {
+        if (!CONFIG.persistLastDeath) {
+            return;
+        }
+
+        LOGGER.trace("persisting deaths");
+        deathData.updateData();
+    }
+
+    public static void onPlayerTeleportHook() {
+        if (!CONFIG.persistBack) {
+            return;
+        }
+
+        LOGGER.trace("persisting teleports");
+        teleportData.updateData();
     }
 }

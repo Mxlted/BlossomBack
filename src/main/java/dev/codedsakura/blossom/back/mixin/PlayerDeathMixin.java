@@ -16,7 +16,8 @@ class PlayerDeathMixin {
         ServerPlayerEntity self = (ServerPlayerEntity) (Object) this;
 
         TeleportDestination deathPoint = new TeleportDestination(self);
-        BlossomBack.deaths.put(self.getUuid(), deathPoint);
+        BlossomBack.DEATHS.put(self.getUuid(), deathPoint);
+        BlossomBack.onPlayerDeathHook();
         BlossomBack.LOGGER.info("{} ({}) died at {}", self.getEntityName(), self.getUuid(), deathPoint);
     }
 }
