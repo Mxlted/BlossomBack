@@ -1,0 +1,4 @@
+{
+  "blossom.back.error.no-previous": "您尚未使用过任何传送指令, 无法找到返回目的地!",
+  "blossom.back.error.no-death": "您未曾死亡, 无法找到返回目的地!"
+}
