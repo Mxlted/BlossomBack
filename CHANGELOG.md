@@ -1,3 +1,7 @@
+# 2.1.1
+
+* Update to support 1.20.2
+
 # 2.1.0
 
 * Improve config ([#5](https://github.com/BlossomMods/BlossomBack/issues/5))
