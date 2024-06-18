@@ -14,7 +14,7 @@ public class ServerWorldSerializer implements JsonSerializer<ServerWorld>, JsonD
 
     @Override
     public ServerWorld deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-        return server.getWorld(RegistryKey.of(RegistryKeys.WORLD, new Identifier(jsonElement.getAsString())));
+        return server.getWorld(RegistryKey.of(RegistryKeys.WORLD, Identifier.of(jsonElement.getAsString())));
     }
 
     @Override
